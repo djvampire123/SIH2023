@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <!-- Google tag (gtag.js) -->
+    <link rel="stylesheet" href="backgroundstyle.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4G5DVR6FCK"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4G5DVR6FCK');
+</script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 FOUND</title>
+    <script src="https://kit.fontawesome.com/e674bba739.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static\css\style.css">
+
+</head>
+
+<body>
+    <section id="header">
+        <div class="navbar-title">
+            <h3 class="title-first-name">
+                404 FOUND
+            </h3>
+        </div>
+        <div>
+            <ul class="navbar-menu">
+                <li><a href="/back_to_index" class="profile-card-active">Home</a></li>
+                <li><a class="profile-card-active" href="#introduction">Introduction</a></li>
+                <li><a class="profile-card-active" href="#skill">Amplification</a></li>
+                <li><a href="/project" class="profile-card-active">Project</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul class="social-media">
+                <li>
+                    <i class="fa-brands fa-linkedin-in"></i>
+                    <a href="#" target="_blank">LinkedIn</a>
+                </li>
+                <li>
+                    <i class="fa-brands fa-github"></i>
+                    <a href="#" target="_blank">Github</a>
+                </li>
+                <li>
+                    <i class="fa-regular fa-envelope"></i>
+                    <a href="#">Email</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <body>
+        <div class="container text-center">
+            <h2 class="title my-4"></h2>
+            <div>
+                {% if uploaded %}
+                    <p></p>
+                    <a href="selector.html"><button></button></a>
+                {% else %}
+                <form method="post" enctype="multipart/form-data" id="uploadForm">
+                    <input type="file" name="file" accept="video/*" id="fileInput" style="display: none;">
+                </form>
+                
+                {% endif %}
+                </div>
+                <center>
+                    <form method="post" enctype="multipart/form-data" id="uploadForm">
+                        <input type="file" name="file" accept="video/*" id="fileInput" style="display: none;">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text label-white-text">Magnification Factor:</span>
+                            <input type="text" name="magnificationFactor" class="form-control" placeholder="Enter Magnification Factor" required autocomplete="off">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text label-white-text">Amplification Factor:</span>
+                            <input type="text" name="amplificationFactor" class="form-control" placeholder="Enter Amplification Factor" required autocomplete="off">
+                            <!-- Submit Button -->
+                        </div>
+                        <button type="submit" class="normal">Submit</button>
+
+                    </form>
+                </center>
+    
+                <div class="button-container">
+                    <button type="button" id="uploadButton" class="normal">Upload</button>
+                    <button id="playButton" class="normal">Play Videos</button>
+                </div>
+            
+                <div class="video-container">
+                    <div class="video-window">
+                        <div class="video-title">Normal Video</div>
+                        <div class="responsive-video">
+                            <video id="video1" width="320" height="240" controls loop>
+                                <source src="{{ url_for('static', filename='originalvideo.mp4') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+            
+                    <div class="video-window">
+                        <div class="video-title">Processed Video</div>
+                        <div class="responsive-video">
+                            <video id="video2" width="320" height="240" controls loop>
+                                <source src="{{ url_for('static', filename='processedvideo.mp4') }}" type="video/mp4"> <!-- Assuming a different video source for the processed video -->
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            
+                <script>
+                    var playButton = document.getElementById('playButton');
+                    var video1 = document.getElementById('video1');
+                    var video2 = document.getElementById('video2');
+                    playButton.addEventListener('click', function() {
+                        if (video1.paused || video2.paused) {
+                            video1.play();
+                            video2.play();
+                            playButton.textContent = 'Pause Videos';
+                        } else {
+                            video1.pause();
+                            video2.pause();
+                            playButton.textContent = 'Play Videos';
+                        }
+                    });
+                </script>
+            <center>
+            <!-- Image container -->
+            <h3 class="section-heading">Patch 1</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_1/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_1/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_1/fft_spectrum.png') }}" alt="" id="image">
+            </div>
+            <h3 class="section-heading">Patch 2</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_2/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_2/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_2/fft_spectrum.png') }}" alt="" id="image">
+            </div>
+            <h3 class="section-heading">Patch 3</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_3/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_3/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_3/fft_spectrum.png') }}" alt="" id="image">
+            </div>
+            <h3 class="section-heading">Patch 4</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_4/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_4/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_4/fft_spectrum.png') }}" alt="" id="image">
+            </div>
+            <h3 class="section-heading">Patch 5</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_5/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_5/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_5/fft_spectrum.png') }}" alt="" id="image">
+            </div><h3 class="section-heading">Patch 6</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_6/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_6/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_6/fft_spectrum.png') }}" alt="" id="image">
+            </div><h3 class="section-heading">Patch 7</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_7/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_7/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_7/fft_spectrum.png') }}" alt="" id="image">
+            </div><h3 class="section-heading">Patch 8</h3>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_8/freq_amp') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_8/two_dim.png') }}" alt="" id="image">
+            </div>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='patch_8/fft_spectrum.png') }}" alt="" id="image">
+            </div>
+        </center>
+    
+    
+            <!-- Image container -->
+            <div class="image-container">
+                <img src="" alt="" id="image">
+            </div>
+    
+            <div id="graphContainer" class="graph-container" style="display: none;">
+                <div id="graph1" class="plot-graph" style="display: none;"></div>
+                <div id="graph2" class="plot-graph" style="display: none;"></div>
+            </div>
+        </div>
+        <script>
+            document.getElementById('uploadButton').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
+    
+            document.getElementById('fileInput').addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    document.getElementById('uploadForm').submit();
+                }
+            });
+        </script>
+        <script src="../static/js/"></script>
+    </body>
+
+    <section id="footer">
+        <div class="footer-left">
+            <form
+            action="https://formspree.io/f/mjvqwrob"
+method="POST">
+    <script src="../static\js\script2.js"></script>
+</body>
+
+</html>

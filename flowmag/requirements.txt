@@ -1,0 +1,14 @@
+configobj
+easydict
+einops
+gdown
+matplotlib
+numpy
+omegaconf
+opencv-python
+Pillow
+scipy
+torch
+torchvision
+tqdm
+tensorboard

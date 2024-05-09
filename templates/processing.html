@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Processing</title>
+    <style>
+        body {
+            background-color: #28292d; /* Background color */
+            color: white; /* Text color */
+            font-family: Raleway, sans-serif; /* Font family */
+            text-align: center; /* Center-align text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Make the body take up the entire viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        p {
+            font-size: 18px; /* Font size */
+        }
+       
+
+        .dot-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: bounce 2.0s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+   
+    </style>
+    <script>
+        function checkFile() {
+            fetch('/check-file')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.file_exists) {
+                        window.location.href = '/selector';
+                    } else {
+                        setTimeout(checkFile, 200);  // Check every second
+                    }
+                });
+        }
+        window.onload = checkFile;
+    </script>
+</head>
+<body>
+    <div class="dot-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+    <p>Processing your video, please wait...</p>
+</body>
+</html>

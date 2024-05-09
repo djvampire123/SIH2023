@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+#image-container {
+    width: 40vw;
+    margin: auto;
+    position: relative;
+}
+
+#image-container img {
+    width: 50%;
+    height: auto;
+    display: block;
+}
+
+#roi-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

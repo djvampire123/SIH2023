@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selection Tool</title>
+    <style>
+        #image-container {
+            position: relative;
+            display: inline-block;
+        }
+        #roi-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #image {
+            max-width: 100%; /* Use max-width to ensure image fits within container */
+            height: auto; /* This will maintain the aspect ratio */
+        }
+    
+    </style>
+</head>
+<body>
+    <center>
+    <div id="image-container">
+        <img id="image" src="{{ url_for('static', filename='final_heatmap.jpg') }}" alt="">
+        <canvas id="roi-canvas"></canvas>
+    </div>
+    <br>
+    <button onclick="window.location.href='/run_scripts'">Save Coordinates</button>
+
+    <script>
+        const canvas = document.getElementById('roi-canvas');
+        const ctx = canvas.getContext('2d');
+        const img = document.getElementById('image');
+    
+        const rois = []; // Array to store multiple ROIs
+        let roiCounter = 1; // Counter for bounding box files
+        let isDrawing = false;
+        let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+        const resizePercentage = -50; // Define your desired percentage here
+    
+        // Function to resize the image
+        function resizeImage() {
+            img.width *= (1 + resizePercentage / 100);
+            img.height *= (1 + resizePercentage / 100);
+            canvas.width = img.width;
+            canvas.height = img.height;
+            drawAllRectangles();
+        }
+    
+        img.onload = resizeImage;
+    
+        canvas.addEventListener('mousedown', e => {
+            x1 = e.offsetX;
+            y1 = e.offsetY;
+            isDrawing = true;
+        });
+    
+        canvas.addEventListener('mousemove', e => {
+            if (isDrawing === true) {
+                x2 = e.offsetX;
+                y2 = e.offsetY;
+                drawAllRectangles();
+            }
+        });
+    
+        canvas.addEventListener('mouseup', e => {
+        if (isDrawing === true) {
+            x2 = e.offsetX;
+            y2 = e.offsetY;
+            const roi = getOriginalCoordinates(x1, y1, x2, y2);
+            rois.push(roi);
+            isDrawing = false;
+            drawAllRectangles();
+
+            sendROIToServer(roi);
+        }
+        });
+    
+        function getOriginalCoordinates(x1, y1, x2, y2) {
+            // Calculate and return the original coordinates
+            return {
+                x1: x1 / (1 + resizePercentage / 100),
+                y1: y1 / (1 + resizePercentage / 100),
+                x2: x2 / (1 + resizePercentage / 100),
+                y2: y2 / (1 + resizePercentage / 100),
+            };
+        }
+    
+        function drawAllRectangles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            rois.forEach(roi => {
+                ctx.beginPath();
+                ctx.rect(
+                    roi.x1 * (1 + resizePercentage / 100),
+                    roi.y1 * (1 + resizePercentage / 100),
+                    (roi.x2 - roi.x1) * (1 + resizePercentage / 100),
+                    (roi.y2 - roi.y1) * (1 + resizePercentage / 100)
+                );
+                ctx.strokeStyle = 'red';
+                ctx.stroke();
+            });
+            // Draw the current ROI being selected
+            if (isDrawing) {
+                ctx.beginPath();
+                ctx.rect(x1, y1, x2 - x1, y2 - y1);
+                ctx.strokeStyle = 'purple';
+                ctx.stroke();
+            }
+        }
+    
+
+    function sendROIToServer(roi) {
+        const formattedData = `${roi.x1} ${roi.y1} ${roi.x2} ${roi.y2}`;
+
+        fetch('/save_coordinates', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: formattedData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+            } else {
+                console.error('Error:', data.error);
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+    
+</center>
+</body>
+</html>
