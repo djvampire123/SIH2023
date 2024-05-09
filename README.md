@@ -1,7 +1,5 @@
-#SIH 2023
+# SIH 2023
+**MOTION AMPLIFICATION VIDEO TECHNIQUES FOR VIBRATIONAL ANALYSIS**
 
-<video width="320" height="240" controls>
-  <source src="https://github.com/djvampire123/Test/releases/download/new/Intro.mp4" type="video/mp4">
-</video>
+https://github.com/djvampire123/SIH2023/assets/150908860/9c1db9c8-b6f0-41ab-bb9d-01388d040efa
 
-Press play to see the video.
